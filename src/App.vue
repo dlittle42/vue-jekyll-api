@@ -14,50 +14,44 @@
       </div>    
     </nav>
     -->
+
     <div class="container">
-      <!-- header -->
+      <!-- header 
         <header>
             <h1><a v-link="{ path: '/home' }">SCM</a></h1>
         </header>
+        -->
+        <header class="header">
+            <!--
+               <div class="circle unselectable" id="logo"><h1>Super Computing Machine</h1></div>
+             -->
+
+
+               <div class="logo unselectable">
+               <a v-link="{ path: '/home' }">
+                    <div id="symbol">
+
+                        <div id="leftcircle" class="halfCircleLeft"><h1>Super Computing Machine - Portfolio of Derek Little - Creative Developer</h1></div>
+                        <div id="rightcircle" class="halfCircleRight"></div>
+                    </div>
+                </a>
+               </div>
+        </header> <!-- end header -->
       <router-view
             class="view"
             transition
             transition-mode="out-in">
         </router-view>
+        <div id="WebGL-output"></div>
     </div>
+
   </template>
 
   <style lang="scss">
 
-    body{
-        font-family: "PT Sans","Helvetica Neue",Helvetica,"Hiragino Sans GB","STHeitiSC-Light","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-        font-size: 16px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-text-size-adjust: none;
-        color: #555;
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 18px;
-    }
 
-    header{
-        border-bottom: 1px solid #eee;
 
-        h1{
-            line-height: 2;
-        }
 
-        a{
-            &, &:link, &:visited, &:active, &.focus {
-                color: #222;
-            }
-            &:hover {
-                color: #08c;
-                text-decoration: none;
-            }
-        }
-    }
 
     footer{
         text-align: center;
@@ -134,3 +128,7 @@
     }
 
 </style>
+
+<!-- import a file from the installed "normalize-css" npm package -->
+<style src="normalize-css/normalize.css"></style>
+<style lang="scss" src="./css/main.scss"></style>

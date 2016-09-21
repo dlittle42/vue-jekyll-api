@@ -30,6 +30,10 @@ router.redirect({
   '*': '/home'
 })
 
+router.beforeEach(function () {
+  window.scrollTo(0, 0)
+})
+
 
 // Start the app on the #app div
 router.start(App, '#app')
