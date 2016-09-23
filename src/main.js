@@ -10,6 +10,8 @@ import Post from './components/postView.vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
+//import Scroll from 'js/ScrollTo.js'
+
 Vue.use(VueResource)
 Vue.use(VueRouter)
 
@@ -33,6 +35,7 @@ router.redirect({
 
 router.beforeEach(function () {
   window.scrollTo(0, 0)
+  //Scroll.scrollTo(0, null, 1);
 })
 
 

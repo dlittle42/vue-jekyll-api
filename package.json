@@ -15,7 +15,8 @@
     "jquery": "^3.1.0",
     "vue": "^1.0.21",
     "vue-resource": "^0.1.17",
-    "vue-router": "^0.7.5"
+    "vue-router": "^0.7.5",
+    "vue-scroll": "^1.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

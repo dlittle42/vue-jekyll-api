@@ -56,6 +56,7 @@
     */
     ready: function () {
      // this.getPost();
+     this.$dispatch('choose-fruit', 'strawberry');
     },
 
     methods: {

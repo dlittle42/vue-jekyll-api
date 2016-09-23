@@ -14,8 +14,8 @@
       </div>    
     </nav>
     -->
-
-    <div class="container">
+    <div id="output"></div>
+    <div class="container" v-scroll="onScroll">
       <!-- header 
         <header>
             <h1><a v-link="{ path: '/home' }">SCM</a></h1>
@@ -68,32 +68,7 @@
         opacity: 0;
     }
 
-    h1,
-    h2,
-    h3,
-    h4{
-        font-weight: 400;
-        color: #222;
-    }
 
-    h1{
-        line-height: 3;
-        font-size: 1.8rem;
-    }
-
-    h2,
-    h3{
-        line-height: 2.5rem;
-        margin-top: 2.5rem;
-    }
-
-    h2{
-        font-size: 1.6rem;
-    }
-
-    h3{
-        font-size: 1.2rem;
-    }
 
     ul,
     ol{
@@ -138,6 +113,7 @@
 /* global requestAnimationFrame */
 //import THREE from 'three'
 //import Object3D from '../components/Object3D'
+require('vue-scroll')
 
 //var jquery = require('jquery');
 var THREE = require('three');
@@ -158,6 +134,7 @@ export default {
       // preserves its current state and we are modifying
       // its initial state.
       //scene: 'Hello Simon!'
+      position: {scrollTop: 0, scrollLeft: 0}
     }
   },
   /*
@@ -172,7 +149,11 @@ export default {
 
   },
   methods: {
-    setupThreejs() {
+    onScroll:function(e, position){
+      this.position = position;
+      console.log("pos="+position)
+    },
+    setupThreejs:function() {
         console.log('App store here?');
         
         
@@ -292,5 +273,13 @@ export default {
       testCall(){
         alert('test call success');
       }
-  }
+  },
+  events: {
+    'choose-fruit':function(fruit){
+        console.log('this is '+ fruit);
+        //handle the choosing of fruit
+
+    }
+  },
+
 }
