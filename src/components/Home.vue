@@ -6,8 +6,15 @@
       <h1>Load dlittle42.github.io</h1>
       <button class="btn btn-primary" v-on:click="getQuote()">Get posts</button>
       -->
-      <h1>Super Computing Machine</h1>
+      <h1 class="pagetitle">Super Computing Machine</h1>
       <p>A program by Derek Little, </p>
+
+      <div id="hello">
+        <h2 class="salutation" transition="expand">{{ salutation }}</h2>
+        <p class="salutation-comment">{{ comment }}</p>
+      </div>
+
+
       <div class="quote-area" v-if="quote">
           <ul>
             <li v-for="entry in quote">
@@ -22,14 +29,15 @@
   </template>
 
   <script>
-var voices = window.speechSynthesis.getVoices();
-        console.dir(voices);
+
 
 
   export default {
     data() {
       return {
-        quote: ''
+        quote: '',
+        salutation: '',
+        comment: ''
       }
     },
     route: {
@@ -39,11 +47,17 @@ var voices = window.speechSynthesis.getVoices();
           console.log('The current view is ' + this.$route.params.name);
 
          // this.setupThreejs();
+
+
+         
         }
     },
     ready: function () {
       this.getQuote();
+      
       this.speak();
+
+      this.introBlurb();
       
     },
 
@@ -59,7 +73,11 @@ var voices = window.speechSynthesis.getVoices();
       // the queue.
       speak:function (text) {
         // Create a new instance of SpeechSynthesisUtterance.
-        var msg = new SpeechSynthesisUtterance();
+
+
+       
+
+        
 
         var voiceList = [
           'Alice',
@@ -86,18 +104,17 @@ var voices = window.speechSynthesis.getVoices();
           'Ting-Ting',
           'Yuna',
           'Zosia',
-          'Zuzana',
+          'Zuzana'
          // 'Google 普通话（中国大陆）',
-          'Google 粤語（香港）',
-          'Google 國語（臺灣）'
+         // 'Google 粤語（香港）',
+         // 'Google 國語（臺灣）'
 
 
 
 
         ]
         
-        // Set the text.
-        msg.text = 'Super Computing Machine';
+        
         
         // Set the attributes.
         /*
@@ -117,11 +134,98 @@ var voices = window.speechSynthesis.getVoices();
         var randomVoice = voiceList[Math.floor(Math.random()*voiceList.length)];
         console.log(randomVoice)
 
-        msg.voice = voices.filter(function(voice) { return voice.name == randomVoice })[0];
+        
 
         
         // Queue this utterance.
-        window.speechSynthesis.speak(msg);
+        
+// make sure voices are loaded before playing. ?? get it to work on repeat???
+         window.speechSynthesis.onvoiceschanged = function () {
+          var msg = new SpeechSynthesisUtterance();
+          console.log("!!"+msg);
+          msg.text = 'Super Computing Machine';
+          msg.onboundary = function(event) {
+              console.log('The msg boundary is to be spoken.')
+          };
+          var voices = window.speechSynthesis.getVoices();
+
+
+          
+
+          console.dir(voices);
+          msg.voice = voices.filter(function(voice) { return voice.name == randomVoice })[0];
+          window.speechSynthesis.speak(msg);
+        };
+       
+        //if (msg)
+
+        //window.speechSynthesis.speak(msg);
+
+      },
+      introBlurb: function(){
+        var column1_JSON = {"phrases": [
+          { 
+            "salutation": "Hooray!",
+            "comment": "You made it."
+          },
+          { 
+            "salutation": "Blimey!",
+            "comment": "You startled me."
+          },
+          { 
+            "salutation": "OK,",
+            "comment": "Let's get to it!"
+          },
+          { 
+            "salutation": "Hey!",
+            "comment": "I thought you might show up."
+          },
+          { 
+            "salutation": "Hola.",
+            "comment": "You've come to the right place."
+          },
+          { 
+            "salutation": "Hello.",
+            "comment": "It's a fine day for parcheesi."
+          },
+         /* { 
+            "salutation": "Face front, true believer!",
+            "comment": "Let us begin our journey."
+          },*/
+
+          { 
+            "salutation": "By the Hoary Hosts of Hoggarth!",
+            "comment": "Let's get this show on the road."
+          },
+          { 
+            "salutation": "Greg Oden's Raven!",
+            "comment": "We've much to do..."
+          },
+          { 
+            "salutation": "Hey!",
+            "comment": "Look at you."
+          },
+          { 
+            "salutation": "HTML, CSS, JS. ",
+            "comment": "And many more acronyms..."
+          }
+          /*,
+          {   
+              "salutation": "Jiminy Cricket,",
+              "comment": "Is winter over yet?"
+          }
+          */
+
+          
+
+
+          ]
+
+          
+        };
+          var rand = Math.floor(Math.random()*column1_JSON.phrases.length);
+          this.salutation = column1_JSON.phrases[rand].salutation;
+          this.comment = column1_JSON.phrases[rand].comment;
       }
 
     }

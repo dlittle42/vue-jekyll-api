@@ -14,13 +14,14 @@
       </div>    
     </nav>
     -->
-    <div id="output"></div>
-    <div class="container" v-scroll="onScroll">
+ 
+    <div class="container">
       <!-- header 
         <header>
             <h1><a v-link="{ path: '/home' }">SCM</a></h1>
         </header>
         -->
+        <div id="output"></div>
         <header class="header">
             <!--
                <div class="circle unselectable" id="logo"><h1>Super Computing Machine</h1></div>
@@ -77,7 +78,7 @@
     }
 
     ul li{
-        padding: 0;
+        padding: 50px 0;
         margin: 0;
         line-height: 2.1rem;
     }
@@ -114,16 +115,19 @@
 //import THREE from 'three'
 //import Object3D from '../components/Object3D'
 require('vue-scroll')
+require('gsap');
+var $ = require('jquery');
+var inView = require('in-view');
 
 //var jquery = require('jquery');
 var THREE = require('three');
 //import THREE from 'three';
 
 var container, stats;
-            var camera, scene, raycaster, renderer;
+var camera, scene, raycaster, renderer;
 
-            var mouse = new THREE.Vector2(), INTERSECTED;
-            var radius = 100, theta = 0;
+var mouse = new THREE.Vector2(), INTERSECTED;
+var radius = 100, theta = 0;
 // http://threejs.org/examples/#webgl_geometry_dynamic
 export default {
 
@@ -134,7 +138,7 @@ export default {
       // preserves its current state and we are modifying
       // its initial state.
       //scene: 'Hello Simon!'
-      position: {scrollTop: 0, scrollLeft: 0}
+
     }
   },
   /*
@@ -146,13 +150,25 @@ export default {
   */
   ready () {
     this.setupThreejs();
+    this.trackWindowScroll();
+
+    
+/*
+        inView.offset(100);
+        inView('.pagetitle')
+            .on('enter', el => {
+                el.style.opacity = 1;
+            })
+            .on('exit', el => {
+                el.style.opacity = 0.5;
+            });
+
+        console.log('check='+inView('.logo').check());
+  */
 
   },
   methods: {
-    onScroll:function(e, position){
-      this.position = position;
-      console.log("pos="+position)
-    },
+
     setupThreejs:function() {
         console.log('App store here?');
         
@@ -272,6 +288,54 @@ export default {
       },
       testCall(){
         alert('test call success');
+      },
+      trackWindowScroll: function (){
+          var $output = $( "#output" ),
+        isScrolling = false,
+        scrolling = "<span id='scrolling'>Scrolling</span>",
+        stopped = "<span id='stopped'>Stopped</span>",
+        delta=1,
+        lastScrollPosition = 0,
+        dist = 0,
+        scrollPos = 0;
+
+
+  
+
+        $( window ).scroll(function() {
+            $output.html( scrolling );
+            isScrolling =true;
+
+            var newScrollPosition = window.scrollY;
+            dist = newScrollPosition - lastScrollPosition;
+ 
+            if (newScrollPosition < lastScrollPosition){
+                //upward - code here
+                delta = 1;
+            }else{
+                //downward - code here
+                delta = -1;
+            }
+           // console.log("delta="+delta);
+            lastScrollPosition = newScrollPosition;
+
+
+          //  console.log($(document).scrollTop());
+              var pos = -Math.floor($(document).scrollTop());
+              scrollPos= pos;
+              camera.position.x = Math.floor($(document).scrollTop());
+
+
+            clearTimeout( $.data( this, "scrollCheck" ) );
+            $.data( this, "scrollCheck", setTimeout(function() {
+                $output.html( stopped );
+                isScrolling =false;
+               // resetPanel();
+
+
+            }, 250) );
+
+        });
       }
   },
   events: {

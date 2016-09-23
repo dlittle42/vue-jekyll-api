@@ -302,3 +302,21 @@ p{
 #output #stopped {
   color: red;
 }
+
+
+
+/* always present */
+.expand-transition {
+  transition: all 1s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
+}
+/* .expand-enter defines the starting state for entering */
+/* .expand-leave defines the ending state for leaving */
+.expand-enter, .expand-leave {
+  height: 10px;
+  padding: 0 10px;
+  opacity: .5;
+}
