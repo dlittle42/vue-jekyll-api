@@ -114,7 +114,7 @@
 /* global requestAnimationFrame */
 //import THREE from 'three'
 //import Object3D from '../components/Object3D'
-require('vue-scroll')
+//require('vue-scroll')
 require('gsap');
 var $ = require('jquery');
 var inView = require('in-view');
@@ -149,8 +149,9 @@ export default {
   },
   */
   ready () {
-    this.setupThreejs();
+   // this.setupThreejs();
     this.trackWindowScroll();
+    console.log('jquery? '+$('.container'));
 
     
 /*
@@ -170,9 +171,7 @@ export default {
   methods: {
 
     setupThreejs:function() {
-        console.log('App store here?');
-        
-        
+
  
         container = document.getElementById('WebGL-output');
 
@@ -323,7 +322,7 @@ export default {
           //  console.log($(document).scrollTop());
               var pos = -Math.floor($(document).scrollTop());
               scrollPos= pos;
-              camera.position.x = Math.floor($(document).scrollTop());
+             // camera.position.x = Math.floor($(document).scrollTop());
 
 
             clearTimeout( $.data( this, "scrollCheck" ) );

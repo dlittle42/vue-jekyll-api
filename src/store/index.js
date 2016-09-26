@@ -1,41 +1,79 @@
+// vendor
+import { EventEmitter } from 'events';
+import { Promise } from 'es6-promise';
 
-export default store
+// setting
+import setting from '../setting';
 
-console.log('store here?');
+// https://developer.github.com/v3/repos/#get
+const LIST_API_URL = `https://api.github.com/repos/${setting.config.repo}/contents/${setting.config.path}?ref=${setting.config.branch}`;
 
-var scene, camera, renderer;
-var geometry, material, mesh;
- 
-//init();
-//animate();
- 
-store.init() {
- 
-    scene = new THREE.Scene();
- 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.z = 1000;
- 
-    geometry = new THREE.BoxGeometry( 200, 200, 200 );
-    material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
- 
-    mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh );
- 
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
- 
-    document.body.appendChild( renderer.domElement );
- 
+
+let store = new EventEmitter();
+
+
+export default store;
+
+/**
+ * fetch post content from github
+ *
+ * @param title
+ * @returns {Promise}
+ */
+store.getPost = (title) => {
+
+    const POST_API_URL = `https://api.github.com/repos/${setting.config.repo}/contents/${setting.config.path}/${title}?ref=${setting.config.branch}`;
+
+    return new Promise((resolve, reject) => {
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `${POST_API_URL}`, false);
+        // https://developer.github.com/v3/media/#html
+        xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
+        xhr.onload = () => {
+            const resText = xhr.responseText;
+            resolve(resText);
+        };
+        xhr.onerror = () => reject;
+        xhr.send();
+
+    });
 }
- 
-store.animate() {
- 
-    requestAnimationFrame( animate );
- 
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
- 
-    renderer.render( scene, camera );
- 
+
+/**
+ * fetch the list from cache or from github api
+ *
+ * @todo paginate not yet
+ *
+ * @param page
+ * @returns {Promise}
+ */
+store.getListByPage = (page = 1) => {
+    return new Promise((resolve, reject) => {
+
+        if (sessionStorage && sessionStorage.getItem('posts')) {
+
+            // read data from cache
+            resolve(JSON.parse(sessionStorage.posts));
+
+        } else {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('GET', LIST_API_URL);
+            xhr.onload = () => {
+                const resJson = xhr.responseText;
+                // caching
+                sessionStorage.setItem('posts', resJson);
+
+                resolve(JSON.parse(resJson));
+            };
+            xhr.onerror = () => reject;
+            xhr.send();
+
+        }
+
+    });
+
 }

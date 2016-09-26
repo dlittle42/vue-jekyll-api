@@ -11,7 +11,7 @@
 
         <h1 id="title">
             {{ title }}
-            <span class="publish-date">{{ title }}</span>
+            <span class="publish-date">{{ media | onlyPublishDate }}</span>
         </h1>
 
         <article
@@ -26,26 +26,49 @@
   </template>
 
   <script>
-
+    import { onlyTitle, onlyPublishDate } from '../filters';
 
   export default {
+
+    filters: {
+            onlyTitle,
+            onlyPublishDate
+        },
     
     data() {
       return {
 
         post: '',
         content: '',
-        title: ''
+        title: '',
+        media:''
       }
     },
     route: {
         data: function (transition) {
           console.log('hook-example data!')
           console.log('The current ID is ' + this.$route.params.name);
-          this.getPost();
+         // this.getPost();
+          return {
+                title: 'test0',
+                content: this.getPost().then(content => content)
+            }
         }
       },
-      /*
+       /*
+    route: {
+        data ({ to }) {
+            const title = to.params.title;
+            document.title = `${onlyTitle(title)} - ${setting.blogTitle}`;
+            this.content = 'Loading...🐶🔫';
+
+            return {
+                title,
+                content: store.getPost(title).then(content => content)
+            }
+        }
+      },
+     
     route:{ 
         data: function (transition) {
             return PersonRepository.get(this, this.$route.params.slug).then((name) => {
@@ -56,8 +79,23 @@
     */
     ready: function () {
      // this.getPost();
+     console.log('ready!');
      this.$dispatch('choose-fruit', 'strawberry');
     },
+    watch: {
+            'content'() {
+                // Load the external link into new tab
+                console.log('watch! content now');
+                /*
+                let linksArray = Array.from(document.querySelectorAll('a'));
+                const currentHost = window.location.host;
+                linksArray.forEach(el => {
+                    if (el.href && el.host !== currentHost)
+                        el.target = '_blank'
+                });
+                */
+            }
+        },
 
     methods: {
       getPost() {
@@ -70,7 +108,8 @@
             //console.log(this.getObjects(js,'slug','finding-nemo'));
             this.post = this.getObjects(js,'slug',postkey);
             this.content = decodeURI(this.post.content);
-            this.title = this.post.content.title;
+            this.title = this.post.title;
+            this.media = to.params.title;
           })
           .error((err) => console.log(err))
       },

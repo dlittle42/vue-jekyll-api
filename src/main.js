@@ -11,6 +11,8 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
 //import Scroll from 'js/ScrollTo.js'
+//var scroller = require('./js/ScrollTo.js');
+var scroller = require('./js/ScrollTo.js');
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
@@ -34,10 +36,14 @@ router.redirect({
 })
 
 router.beforeEach(function () {
-  window.scrollTo(0, 0)
-  //Scroll.scrollTo(0, null, 1);
+  //window.scrollTo(0, 1000)
+ // console.log('beforeEach = ' + scrollTo);
+ // scrollTo(0, console.log('end'), 1000);
+ scroller.scrollTo(0, null, 500);
 })
 
 
 // Start the app on the #app div
 router.start(App, '#app')
+
+

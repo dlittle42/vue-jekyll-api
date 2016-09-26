@@ -1,3 +1,6 @@
+console.log('scrollTo loaded');
+//alertCall();
+
 // easing functions http://goo.gl/5HLl8
 Math.easeInOutQuad = function (t, b, c, d) {
   t /= d/2;
@@ -24,8 +27,12 @@ var requestAnimFrame = (function(){
   return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ){ window.setTimeout(callback, 1000 / 60); };
 })();
 
-function scrollTo(to, callback, duration) {
-  console.log('scrollTo');
+export function alertCall(){
+  alert('yikes');
+}
+
+export function scrollTo(to, callback, duration) {
+  console.log('scrollTo function');
   // because it's so fucking difficult to detect the scrolling element, just move them all
   function move(amount) {
     document.documentElement.scrollTop = amount;
@@ -41,6 +48,7 @@ function scrollTo(to, callback, duration) {
     increment = 20;
   duration = (typeof(duration) === 'undefined') ? 500 : duration;
   var animateScroll = function() {
+    //console.log('animate scroll')
     // increment the time
     currentTime += increment;
     // find the value with the quadratic in-out easing function
@@ -49,8 +57,10 @@ function scrollTo(to, callback, duration) {
     move(val);
     // do the animation unless its over
     if (currentTime < duration) {
+
       requestAnimFrame(animateScroll);
     } else {
+      console.log('end scrolling');
       if (callback && typeof(callback) === 'function') {
         // the animation is done so lets callback
         callback();

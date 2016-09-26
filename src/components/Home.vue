@@ -30,7 +30,7 @@
 
   <script>
 
-
+import setting from '../setting';
 
   export default {
     data() {
@@ -74,47 +74,6 @@
       speak:function (text) {
         // Create a new instance of SpeechSynthesisUtterance.
 
-
-       
-
-        
-
-        var voiceList = [
-          'Alice',
-          'Alva',
-          'Bruce',
-          'Damayanti',
-          'Diego',
-          'Ellen',
-          'Fred',
-          'Ioana',
-          'Joana',
-          'Junior',
-          'Kanya',
-          'Kyoko',
-          'Lekha',
-          'Melina',
-          'Milena',
-          'Moira',
-          'Monica',
-          'Nora',
-          'Satu',
-          'Tarik',
-          'Thomas',
-          'Ting-Ting',
-          'Yuna',
-          'Zosia',
-          'Zuzana'
-         // 'Google 普通话（中国大陆）',
-         // 'Google 粤語（香港）',
-         // 'Google 國語（臺灣）'
-
-
-
-
-        ]
-        
-        
         
         // Set the attributes.
         /*
@@ -130,7 +89,7 @@
           msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceSelect.value; })[0];
         }
         */
-
+        var voiceList = setting.voices;
         var randomVoice = voiceList[Math.floor(Math.random()*voiceList.length)];
         console.log(randomVoice)
 
@@ -163,69 +122,11 @@
 
       },
       introBlurb: function(){
-        var column1_JSON = {"phrases": [
-          { 
-            "salutation": "Hooray!",
-            "comment": "You made it."
-          },
-          { 
-            "salutation": "Blimey!",
-            "comment": "You startled me."
-          },
-          { 
-            "salutation": "OK,",
-            "comment": "Let's get to it!"
-          },
-          { 
-            "salutation": "Hey!",
-            "comment": "I thought you might show up."
-          },
-          { 
-            "salutation": "Hola.",
-            "comment": "You've come to the right place."
-          },
-          { 
-            "salutation": "Hello.",
-            "comment": "It's a fine day for parcheesi."
-          },
-         /* { 
-            "salutation": "Face front, true believer!",
-            "comment": "Let us begin our journey."
-          },*/
-
-          { 
-            "salutation": "By the Hoary Hosts of Hoggarth!",
-            "comment": "Let's get this show on the road."
-          },
-          { 
-            "salutation": "Greg Oden's Raven!",
-            "comment": "We've much to do..."
-          },
-          { 
-            "salutation": "Hey!",
-            "comment": "Look at you."
-          },
-          { 
-            "salutation": "HTML, CSS, JS. ",
-            "comment": "And many more acronyms..."
-          }
-          /*,
-          {   
-              "salutation": "Jiminy Cricket,",
-              "comment": "Is winter over yet?"
-          }
-          */
-
-          
-
-
-          ]
-
-          
-        };
-          var rand = Math.floor(Math.random()*column1_JSON.phrases.length);
-          this.salutation = column1_JSON.phrases[rand].salutation;
-          this.comment = column1_JSON.phrases[rand].comment;
+        
+   
+          var rand = Math.floor(Math.random()* setting.phrases.length);
+          this.salutation = setting.phrases[rand].salutation;
+          this.comment = setting.phrases[rand].comment;
       }
 
     }
