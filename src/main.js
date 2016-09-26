@@ -13,6 +13,9 @@ import VueResource from 'vue-resource'
 //import Scroll from 'js/ScrollTo.js'
 //var scroller = require('./js/ScrollTo.js');
 var scroller = require('./js/ScrollTo.js');
+//var $ = require('jquery');
+//require('jquery')
+
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
@@ -45,5 +48,54 @@ router.beforeEach(function () {
 
 // Start the app on the #app div
 router.start(App, '#app')
+
+
+
+
+Vue.transition('fade', {
+    enterClass: 'fadeIn',
+    leaveClass: 'fadeOut',
+    afterLeave: function (el) {
+      this.$dispatch('fade-done');
+    }
+  });
+
+Vue.transition('expand', {
+
+  beforeEnter: function (el) {
+  	console.log('beforeEnter');
+    //el.textContent = 'beforeEnter'
+  },
+  enter: function (el) {
+  	console.log('enter');
+    //el.textContent = 'enter'
+    //$('body').css('background-color','red');
+  },
+  afterEnter: function (el) {
+  	console.log('afterEnter');
+    //el.textContent = 'afterEnter'
+  },
+  enterCancelled: function (el) {
+  	console.log('enterCancelled');
+    // handle cancellation
+  },
+
+  beforeLeave: function (el) {
+  	console.log('beforeLeave');
+    //el.textContent = 'beforeLeave'
+  },
+  leave: function (el) {
+  	console.log('leave');
+    //el.textContent = 'leave'
+  },
+  afterLeave: function (el) {
+  	console.log('afterLeave');
+    //el.textContent = 'afterLeave'
+  },
+  leaveCancelled: function (el) {
+  	console.log('leaveCancelled');
+    // handle cancellation
+  }
+})
 
 

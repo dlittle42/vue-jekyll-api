@@ -320,3 +320,21 @@ p{
   padding: 0 10px;
   opacity: .5;
 }
+
+
+
+.dot {
+    background-color: rgba(255,0,0,1);
+    border-radius: 50%;
+    height: 2.5rem;
+    margin: 200px 0;
+    width: 2.5rem;
+    -webkit-transition: background-color 2s cubic-bezier(0.19, 1, 0.22, 1),-webkit-transform 2s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: background-color 2s cubic-bezier(0.19, 1, 0.22, 1),transform 2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.dot.in-view {
+    background-color: rgba(0,0,255,0.25);
+    -webkit-transform: scale(2);
+    transform: scale(2);
+}

@@ -62,7 +62,7 @@
     }
 
     .v-transition{
-        transition: opacity .2s ease;
+        transition: opacity 4s ease;
     }
 
     .v-enter, .v-leave{
@@ -78,7 +78,7 @@
     }
 
     ul li{
-        padding: 50px 0;
+       // padding: 50px 0;
         margin: 0;
         line-height: 2.1rem;
     }

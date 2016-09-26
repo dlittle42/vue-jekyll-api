@@ -22,7 +22,29 @@ export default store;
  */
 store.getPost = (title) => {
 
-    const POST_API_URL = `https://api.github.com/repos/${setting.config.repo}/contents/${setting.config.path}/${title}?ref=${setting.config.branch}`;
+    const POST_API_URL = setting.config.feed;
+
+    return new Promise((resolve, reject) => {
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `${POST_API_URL}`, false);
+        // https://developer.github.com/v3/media/#html
+        xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
+        xhr.onload = () => {
+            const resText = xhr.responseText;
+            resolve(resText);
+        };
+        xhr.onerror = () => reject;
+        xhr.send();
+
+    });
+}
+
+
+store.getList = () => {
+
+    const POST_API_URL = setting.config.feed;
 
     return new Promise((resolve, reject) => {
 
@@ -48,7 +70,7 @@ store.getPost = (title) => {
  *
  * @param page
  * @returns {Promise}
- */
+ 
 store.getListByPage = (page = 1) => {
     return new Promise((resolve, reject) => {
 
@@ -77,3 +99,21 @@ store.getListByPage = (page = 1) => {
     });
 
 }
+*/
+/*
+getObjects(obj, key, val) {
+        
+        var objects = [];
+        for (var i in obj) {
+            //console.log(obj[i].slug);
+            if (obj[i].slug == val){
+                objects.push(obj[i]);
+                return obj[i];
+            }
+            
+        }
+       // console.log(objects);
+       // return objects;
+      }
+
+      */

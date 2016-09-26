@@ -22,10 +22,15 @@
 
         </div>
         <a v-link="{ name: 'post', params: { name: 'kill-bill' }}">next</a>
+    
+        <div class="dot"></div>
     </div>
   </template>
 
   <script>
+
+    var inView = require('in-view');
+
     import { onlyTitle, onlyPublishDate } from '../filters';
 
   export default {
@@ -48,11 +53,11 @@
         data: function (transition) {
           console.log('hook-example data!')
           console.log('The current ID is ' + this.$route.params.name);
-         // this.getPost();
-          return {
-                title: 'test0',
-                content: this.getPost().then(content => content)
-            }
+          this.getPost();
+         // return {
+                //title: 'test0',
+                //content: this.getPost().then(content => content)
+          //  }
         }
       },
        /*
@@ -81,6 +86,17 @@
      // this.getPost();
      console.log('ready!');
      this.$dispatch('choose-fruit', 'strawberry');
+
+
+     inView.offset(100);
+     inView('.dot')
+      .on('enter', el => {
+         // console.log("ENTERED!!!!!!");
+          $(el).addClass('in-view');
+      }).on('exit', el => {
+         // console.log("EXIT!!!!!!");
+          $(el).removeClass('in-view');
+      });
     },
     watch: {
             'content'() {

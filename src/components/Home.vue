@@ -13,14 +13,30 @@
         <h2 class="salutation" transition="expand">{{ salutation }}</h2>
         <p class="salutation-comment">{{ comment }}</p>
       </div>
-
+      <div>{{content}}</div>
 
       <div class="quote-area" v-if="quote">
           <ul>
+
+
+          <li class="animated square"
+         enter-stagger="500"
+         leave-stagger="0"
+         transition="expand"
+         v-for="entry in quote"
+         v-el:$index>
+           
+            <a v-link="{ name: 'post', params: { name: entry.slug }}">{{ entry.title }}</a>
+
+         </li>  
+
+<!--
+
             <li v-for="entry in quote">
-             <!-- <a v-bind:href="entry.url">{{ entry.title }}</a> -->
+           
               <a v-link="{ name: 'post', params: { name: entry.slug }}">{{ entry.title }}</a>
             </li>
+            -->
           </ul>
         
       </div>
@@ -31,13 +47,15 @@
   <script>
 
 import setting from '../setting';
+import store from '../store';
 
   export default {
     data() {
       return {
         quote: '',
         salutation: '',
-        comment: ''
+        comment: '',
+        content:''
       }
     },
     route: {
@@ -47,7 +65,10 @@ import setting from '../setting';
           console.log('The current view is ' + this.$route.params.name);
 
          // this.setupThreejs();
-
+         return {
+               // title,
+                //content: store.getList().then(content => content)
+            }
 
          
         }
@@ -58,8 +79,33 @@ import setting from '../setting';
       this.speak();
 
       this.introBlurb();
+
+      
       
     },
+    watch: {
+            'content'(data) {
+                // Load the external link into new tab
+                console.log('watch! content now');
+
+                /*
+                let linksArray = Array.from(document.querySelectorAll('a'));
+                const currentHost = window.location.host;
+                linksArray.forEach(el => {
+                    if (el.href && el.host !== currentHost)
+                        el.target = '_blank'
+                });
+                */
+            }
+        },
+
+    events: {
+    'fade-done': function () {
+      console.log('fade-done!!!!!');
+     // this.squaresToFadeOut--
+     // this.reload();
+    }
+  },
 
     methods: {
       getQuote() {
@@ -131,4 +177,6 @@ import setting from '../setting';
 
     }
   }
+
+  
   </script>
