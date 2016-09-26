@@ -1,5 +1,3 @@
-console.log('scrollTo loaded');
-//alertCall();
 
 // easing functions http://goo.gl/5HLl8
 Math.easeInOutQuad = function (t, b, c, d) {

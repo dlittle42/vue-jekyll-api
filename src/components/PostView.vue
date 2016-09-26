@@ -21,7 +21,8 @@
         </article>
 
         </div>
-        <a v-link="{ name: 'post', params: { name: 'kill-bill' }}">next</a>
+        <a v-link="{ name: 'post', params: { name: prev.slug }}">Prev: {{prev.title}}</a>
+        <a v-link="{ name: 'post', params: { name: next.slug }}">next: {{next.title}}</a>
     
         <div class="dot"></div>
     </div>
@@ -30,6 +31,8 @@
   <script>
 
     var inView = require('in-view');
+    import setting from '../setting';
+    import store from '../store';
 
     import { onlyTitle, onlyPublishDate } from '../filters';
 
@@ -46,9 +49,12 @@
         post: '',
         content: '',
         title: '',
-        media:''
+        media:'',
+        prev: '',
+        next: ''
       }
     },
+    /*
     route: {
         data: function (transition) {
           console.log('hook-example data!')
@@ -60,6 +66,24 @@
           //  }
         }
       },
+*/
+
+    route:{ 
+        canReuse: function () {
+          return false
+        },
+        data: function (transition) {
+            return store.getPost(this.$route.params.name).then((obj) => {
+                return { 
+                  title: obj.title,
+                  content: obj.content,
+                  media: obj.media,
+                  prev: obj.prev,
+                  next: obj.next }
+            })
+        }
+    },
+
        /*
     route: {
         data ({ to }) {
@@ -83,20 +107,20 @@
     },
     */
     ready: function () {
-     // this.getPost();
-     console.log('ready!');
-     this.$dispatch('choose-fruit', 'strawberry');
+       // this.getPost();
+       console.log('ready!');
+       this.$dispatch('choose-fruit', 'strawberry');
 
 
-     inView.offset(100);
-     inView('.dot')
-      .on('enter', el => {
-         // console.log("ENTERED!!!!!!");
-          $(el).addClass('in-view');
-      }).on('exit', el => {
-         // console.log("EXIT!!!!!!");
-          $(el).removeClass('in-view');
-      });
+       inView.offset(100);
+       inView('.dot')
+        .on('enter', el => {
+           // console.log("ENTERED!!!!!!");
+            $(el).addClass('in-view');
+        }).on('exit', el => {
+           // console.log("EXIT!!!!!!");
+            $(el).removeClass('in-view');
+        });
     },
     watch: {
             'content'() {
@@ -114,35 +138,7 @@
         },
 
     methods: {
-      getPost() {
-        this.$http
-          .get('https://dlittle42.github.io/data/site.json', (data) => {
-            console.log("getpost="+this.$route.params.name);
-            var postkey = this.$route.params.name
-            var js = data;
-
-            //console.log(this.getObjects(js,'slug','finding-nemo'));
-            this.post = this.getObjects(js,'slug',postkey);
-            this.content = decodeURI(this.post.content);
-            this.title = this.post.title;
-            this.media = to.params.title;
-          })
-          .error((err) => console.log(err))
-      },
-      getObjects(obj, key, val) {
-        
-        var objects = [];
-        for (var i in obj) {
-            //console.log(obj[i].slug);
-            if (obj[i].slug == val){
-                objects.push(obj[i]);
-                return obj[i];
-            }
-            
-        }
-       // console.log(objects);
-       // return objects;
-      }
+      
 
     }
   }

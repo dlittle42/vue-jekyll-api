@@ -18,7 +18,7 @@
       <div class="quote-area" v-if="quote">
           <ul>
 
-
+<!--
           <li class="animated square"
          enter-stagger="500"
          leave-stagger="0"
@@ -29,14 +29,14 @@
             <a v-link="{ name: 'post', params: { name: entry.slug }}">{{ entry.title }}</a>
 
          </li>  
+-->
 
-<!--
 
-            <li v-for="entry in quote">
+            <li v-for="entry in quote" transition="fade">
            
               <a v-link="{ name: 'post', params: { name: entry.slug }}">{{ entry.title }}</a>
             </li>
-            -->
+     
           </ul>
         
       </div>
@@ -80,7 +80,7 @@ import store from '../store';
 
       this.introBlurb();
 
-      
+
       
     },
     watch: {

@@ -307,7 +307,7 @@ p{
 
 /* always present */
 .expand-transition {
-  transition: all 1s ease;
+  transition: all .5s ease;
   height: 30px;
   padding: 10px;
   background-color: #eee;

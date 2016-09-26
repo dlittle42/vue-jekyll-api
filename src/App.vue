@@ -62,7 +62,7 @@
     }
 
     .v-transition{
-        transition: opacity 4s ease;
+        transition: opacity 1s ease;
     }
 
     .v-enter, .v-leave{

@@ -33,7 +33,21 @@ store.getPost = (title) => {
         xhr.setRequestHeader("Accept", "application/vnd.github.v3.html");
         xhr.onload = () => {
             const resText = xhr.responseText;
-            resolve(resText);
+
+            var postkey = title;
+            var js = JSON.parse(resText);
+            var post = store.getObjects(js,'slug',postkey);
+            console.dir(post);
+
+            var dataObj = {
+                title: post.current.title,
+                content: decodeURI(post.current.content),
+                media: 'media here',
+                prev: post.prev,
+                next: post.next
+            }
+
+            resolve(dataObj);
         };
         xhr.onerror = () => reject;
         xhr.send();
@@ -100,20 +114,62 @@ store.getListByPage = (page = 1) => {
 
 }
 */
-/*
-getObjects(obj, key, val) {
+
+store.getObjects  = (obj, key, val) => {
         
         var objects = [];
+        var triple =[]
+        var curr;
         for (var i in obj) {
-            //console.log(obj[i].slug);
+            console.log(obj[i].slug);
+            objects.push(obj[i]);
             if (obj[i].slug == val){
-                objects.push(obj[i]);
-                return obj[i];
+               // objects.push(obj[i]);
+              // console.log("PREV $$$$$$ - -" + obj[i-1].slug);
+              // console.log("CURRENT $$$$$$ - -" + obj[i].slug);
+              // console.log("NEXT $$$$$$ - -" + obj[i+1].slug);
+               curr = i;
+               /*
+                triple ={
+                    prev: obj[i-1],
+                    current: obj[i],
+                    next: obj[i+1]
+                }
+                */
+                //return obj[i];
+                
+                //return triple;
             }
             
         }
        // console.log(objects);
        // return objects;
+       var nextNum = Number(curr)+1;
+       if (nextNum > obj.length-1) nextNum = 0;
+
+       var prevNum = Number(curr)-1;
+       if (prevNum < 0 ) prevNum = obj.length-1;
+
+
+       triple ={
+                    prev: objects[prevNum],
+                    current: objects[curr],
+                    next: objects[nextNum]
+                }
+       console.log('get obj');
+       console.dir(obj);
+       console.log('prev = '+ obj[4].slug + ', current = '+ obj[curr].slug + ', next = '+ obj[6].slug);
+      // var nextnum = Number(curr)+1;
+       console.log(curr);
+       console.log(nextNum);
+       console.log('prev = '+ obj[prevNum].slug + ', current = '+ obj[curr].slug + ', next = '+ obj[nextNum].slug);
+
+
+
+       console.log('get triple');
+       console.dir(triple);
+
+       return triple;
       }
 
-      */
+ 
