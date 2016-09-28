@@ -41,8 +41,9 @@ store.getPost = (title) => {
 
             var dataObj = {
                 title: post.current.title,
+                excerpt: post.current.excerpt,
                 content: decodeURI(post.current.content),
-                media: 'media here',
+                media: post.current.media,
                 prev: post.prev,
                 next: post.next
             }

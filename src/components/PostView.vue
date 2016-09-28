@@ -13,13 +13,14 @@
             {{ title }}
             <span class="publish-date">{{ media | onlyPublishDate }}</span>
         </h1>
-
+        <p> {{excerpt}} </p>
+        <a href="{{media}}" >{{media}} </a>
         <article
             class="post-content"
             v-html="content"
             transition>
         </article>
-
+            <a v-link="{ name: 'post', params: { name: prev.slug }}">Prev: {{prev.title}}</a>
         </div>
         <a v-link="{ name: 'post', params: { name: prev.slug }}">Prev: {{prev.title}}</a>
         <a v-link="{ name: 'post', params: { name: next.slug }}">next: {{next.title}}</a>
@@ -48,6 +49,7 @@
 
         post: '',
         content: '',
+        excerpt: '',
         title: '',
         media:'',
         prev: '',
@@ -76,6 +78,7 @@
             return store.getPost(this.$route.params.name).then((obj) => {
                 return { 
                   title: obj.title,
+                  excerpt: obj.excerpt,
                   content: obj.content,
                   media: obj.media,
                   prev: obj.prev,
