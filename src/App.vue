@@ -197,7 +197,8 @@ export default {
           //  console.log($(document).scrollTop());
               var pos = -Math.floor($(document).scrollTop());
               scrollPos= pos;
-            //  camera.position.x = Math.floor($(document).scrollTop());
+              threejs_scene.setCamera(Math.floor($(document).scrollTop()));
+             // threejs_scene.camera.position.x = Math.floor($(document).scrollTop());
 
 
             clearTimeout( $.data( this, "scrollCheck" ) );

@@ -1,4 +1,5 @@
-export default threejs_scene;
+
+
 console.log('threejs_scene')
 
 var THREE = require('three');
@@ -9,6 +10,9 @@ var camera, scene, raycaster, renderer;
 
 var mouse = new THREE.Vector2(), INTERSECTED;
 var radius = 100, theta = 0;
+var threejs_scene = new Object();
+
+export default threejs_scene;
 
 
 threejs_scene.init = () => {
@@ -57,21 +61,21 @@ threejs_scene.init = () => {
        // stats = new Stats();
        // container.appendChild( stats.dom );
 
-        document.addEventListener( 'mousemove', this.onDocumentMouseMove, false );
+        document.addEventListener( 'mousemove', threejs_scene.onDocumentMouseMove, false );
 
         //
 
-        window.addEventListener( 'resize', this.onWindowResize, false );
+        window.addEventListener( 'resize', threejs_scene.onWindowResize, false );
 
-        this.animate();
+      threejs_scene.animate();
 
  
 }
 
 threejs_scene.animate = () => {
-        requestAnimationFrame( this.animate );
+        requestAnimationFrame( threejs_scene.animate );
 
-        this.render();
+        threejs_scene.render();
  }
 
 threejs_scene.render = () => {
